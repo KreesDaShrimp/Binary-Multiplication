@@ -128,6 +128,25 @@ void boothAlgorithm(int br[], int qr[], int mt[], int qrn, int sc)
 int main()
 {
 
+	int cand;
+	int plier;
+	cout << "Enter Multiplicand: ";
+	cin >> cand;
+	cout << "Enter Multiplier: ";
+	cin >> plier;
+
+	int binArray[3];
+
+	int rem1, rem2, i = 0, j = 0; //rem1 and rem2 are remainders
+	while (plier != 0)
+	{
+		rem2 = plier % 2;
+		plier /= 2;
+		binArray[i] = rem2;
+		i++;
+	}
+	cout << binArray[3] << binArray[2] << binArray[1] << binArray[0] << endl;
+
 	int mt[10], sc;
 	int brn, qrn;
 
