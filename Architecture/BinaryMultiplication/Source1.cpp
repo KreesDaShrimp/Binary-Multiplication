@@ -35,7 +35,7 @@ void complement(int a[], int n)
 	add(a, x, n);
 }
 
-// function ro perform right shift 
+// function to perform right shift 
 void rightShift(int ac[], int qr[], int& qn, int qrn)
 {
 	int temp, i;
@@ -135,9 +135,10 @@ int main()
 	cout << "Enter Multiplier: ";
 	cin >> plier;
 
-	int binArray[3];
+	int binArray[7];
 
 	int rem1, rem2, i = 0, j = 0; //rem1 and rem2 are remainders
+	//decimal to binary
 	while (plier != 0)
 	{
 		rem2 = plier % 2;
@@ -145,7 +146,7 @@ int main()
 		binArray[i] = rem2;
 		i++;
 	}
-	cout << binArray[3] << binArray[2] << binArray[1] << binArray[0] << endl;
+	cout << binArray[7] << binArray[6] << binArray[5] << binArray[4] << binArray[3] << binArray[2] << binArray[1] << binArray[0] << endl;
 
 	int mt[10], sc;
 	int brn, qrn;
