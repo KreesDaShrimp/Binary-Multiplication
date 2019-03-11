@@ -62,44 +62,74 @@ void display(int ac[], int multiplier[], int sequenceCounter)
 
 }
 
-string decimal_to_binary(int n) {
-	if (n < 0) { // check if negative and alter the number
-		n = 256 + n;
-	}
-	string result = "";
-	while (n > 0) {
-		result = string(1, (char)(n % 2 + 48)) + result;
+
+void decimalToBinary(int n, int binaryArray[]) {
+	n = abs(n);
+	for(int i = 0; i < 8; i++){
+		binaryArray[i] = n % 2;
 		n = n / 2;
 	}
-	return result;
 }
 
-
-// function to convert decimal to binary 
-int* decToBinary(int n)
-{
-	// array to store binary number 
-	int binaryNum[1000];
-
-	// counter for binary array 
-	int i = 0;
-	while (n > 0) {
-
-		// storing remainder in binary array 
-		binaryNum[i] = n % 2;
-		n = n / 2;
-		i++;
+void binaryToNegative(int binaryArray[]) {
+	int i;
+	//Flip the 1s and 0s
+	for (i = 0; i < 8; i++) {
+		if (binaryArray[i] == 1) {
+			binaryArray[i] = 0;
+		}
+		else if (binaryArray[i] == 0) {
+			binaryArray[i] = 1;
+		}
 	}
-	return binaryNum;
-	// printing binary array in reverse order 
-	for (int j = i - 1; j >= 0; j--)
-		cout << binaryNum[j];
+	int tempArray[8];
+	//Copy values of binary array
+	for (i = 0; i < 8; i++) {
+		tempArray[i] = binaryArray[i];
+	}
+
+	//2s Compliment
+	for (int i = 0; i < 8; i++)
+	{
+		if (tempArray[i] == 1)
+			binaryArray[i] = 0;
+		else
+		{
+			binaryArray[i] = 1;
+			break;
+		}
+	}
 }
 
-int main(int argc, char **argv)
+void binaryToNegative2(int binaryArray[]) {
+	int n = (sizeof(binaryArray) / sizeof(*binaryArray));
+
+	// Traverse the string to get first '1' from 
+	// the last of string 
+	int i;
+	for (i = n - 1; i >= 0; i--)
+		if (binaryArray[i] == 1)
+			break;
+
+	//// If there exists no '1' concatenate 1 at the 
+	//// starting of string 
+	//if (i == -1)
+	//	return 1 + binaryArray;
+
+	// Continue traversal after the position of 
+	// first '1' 
+	for (int k = i - 1; k >= 0; k--)
+	{
+		//Just flip the values 
+		if (binaryArray[k] == 1)
+			binaryArray[k] = 0;
+		else
+			binaryArray[k] = 1;
+	}
+}
+int main()
 {
 	//Max input is 127 to -128
-
 
 
 	//Convert to Binary
@@ -124,44 +154,58 @@ int main(int argc, char **argv)
 		}
 	}
 
-	int multiplicandArray[7] = *decToBinary(tempMultiplicand);
-
-	cout << "Multiplicand(decimal): " << tempMultiplicand << "\nMultiplicand(binary): " << *decToBinary(tempMultiplicand) << endl;
-	cout << "Multiplier(decimal): " << tempMuliplier << "\nMultiplier(binary): " << *decToBinary(tempMuliplier) << endl;
-
-
-
-	int mt[10], multiplicand[10], multiplier[10], sc, ac[10] = { 0 };
-	int brn;
-	int sequenceCounter; //Sequence counter
+	int mt[8], multiplicandArray[8], multiplierArray[8], sc, ac[8] = { 0 };
+	int multiplicandBits = 8;
+	int multiplierBits = 8; //Sequence counter
 	int i;
 	int qn;
 	int temp;
-	cout << "--Enter the multiplicand and multipier in signed 2's complement form if negative--" << endl;
+	//cout << "--Enter the multiplicand and multipier in signed 2's complement form if negative--" << endl;
 
-	cout << "\n Number of multiplicand bit=";
-	cin >> brn;
-	cout << "\nmultiplicand=";
+	//cout << "\n Number of multiplicand bit=";
+	//cin >> multiplicandBits;
+	//cout << "\nmultiplicand=";
 
-	for (i = brn - 1; i >= 0; i--)
-		cin >> multiplicand[i]; //multiplicand
-
-	for (i = brn - 1; i >= 0; i--)
-		mt[i] = multiplicand[i]; // copy multiplicand to temp array mt[]
-
-	complement(mt, brn);
-
-	cout << "\nNo. of multiplier bit=";
-	cin >> sequenceCounter;
-
-	sc = sequenceCounter; //sequence counter
-
-	cout << "Multiplier=";
-	for (i = sequenceCounter - 1; i >= 0; i--)
-		cin >> multiplier[i]; //multiplier
+	//for (i = multiplicandBits - 1; i >= 0; i--)
+	//	cin >> multiplicand[i]; //multiplicand
 
 
+	decimalToBinary(tempMultiplicand, multiplicandArray);
+	if (tempMultiplicand < 0) {
+		binaryToNegative(multiplicandArray);
+	}
 
+	//Print multiplicand
+	cout << "Multiplicand: ";
+	for (int i = 7; i >= 0; i--) {
+		cout << multiplicandArray[i];
+	}
+	cout << endl;
+
+	for (i = multiplicandBits - 1; i >= 0; i--)
+		mt[i] = multiplicandArray[i]; // copy multiplicand to temp array mt[]
+
+	complement(mt, multiplicandBits);
+
+	//cout << "\nNo. of multiplier bit=";
+	//cin >> multiplierBits;
+
+	sc = multiplierBits; //sequence counter
+
+	//cout << "Multiplier=";
+	//for (i = multiplierBits - 1; i >= 0; i--)
+	//	cin >> multiplier[i]; //multiplier
+
+	decimalToBinary(tempMuliplier, multiplierArray);
+	if (tempMuliplier < 0) {
+		binaryToNegative(multiplierArray);
+	}
+	//Print multiplier
+	cout << "Multiplier: ";
+	for (int i = 7; i >= 0; i--) {
+		cout << multiplierArray[i];
+	}
+	cout << endl;
 
 	//BEGIN BOOTHS ALGORITHM
 
@@ -170,44 +214,44 @@ int main(int argc, char **argv)
 
 	cout << "qn\tq[n+1]\t\tStep\t\tAC\tPlier\t\tsc\n";
 	cout << "\t\t\tinitial\t\t";
-	display(ac, multiplier, sequenceCounter);
+	display(ac, multiplierArray, multiplierBits);
 	cout << "\t\t" << sc << "\n";
 
 
 	//Main Loop
 	while (sc != 0)
 	{
-		cout << multiplier[0] << "\t" << qn;
-		if ((qn + multiplier[0]) == 1)
+		cout << multiplierArray[0] << "\t" << qn;
+		if ((qn + multiplierArray[0]) == 1)
 		{
 			if (temp == 0)
 			{
-				add(ac, mt, sequenceCounter);
+				add(ac, mt, multiplierBits);
 				cout << "\t\tsubtracting Cand\t";
-				for (i = sequenceCounter - 1; i >= 0; i--)
+				for (i = multiplierBits - 1; i >= 0; i--)
 					cout << ac[i];
 				temp = 1;
 			}
 			else if (temp == 1)
 			{
-				add(ac, multiplicand, sequenceCounter);
+				add(ac, multiplicandArray, multiplierBits);
 				cout << "\t\tadding Cand\t";
-				for (i = sequenceCounter - 1; i >= 0; i--)
+				for (i = multiplierBits - 1; i >= 0; i--)
 					cout << ac[i];
 				temp = 0;
 			}
 			cout << "\n\t";
-			ashr(ac, multiplier, qn, sequenceCounter);
+			ashr(ac, multiplierArray, qn, multiplierBits);
 		}
-		else if (qn - multiplier[0] == 0)
-			ashr(ac, multiplier, qn, sequenceCounter);
+		else if (qn - multiplierArray[0] == 0)
+			ashr(ac, multiplierArray, qn, multiplierBits);
 
-		display(ac, multiplier, sequenceCounter);
+		display(ac, multiplierArray, multiplierBits);
 		cout << "\t";
 
 		sc--;
 		cout << "\t" << sc << "\n";
 	}
 	cout << "Result=";
-	display(ac, multiplier, sequenceCounter);
+	display(ac, multiplierArray, multiplierBits);
 }
