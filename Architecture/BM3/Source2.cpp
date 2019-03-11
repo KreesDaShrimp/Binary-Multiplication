@@ -35,22 +35,22 @@ void add(int ac[], int x[], int sequenceCounter)
 
 }
 
-void ashr(int ac[], int multiplier[], int &qn, int sequenceCounter)
+void ashr(int ac[], int multiplierArray[], int &qn, int sequenceCounter)
 {
 	int temp, i;
 
 	temp = ac[0];
-	qn = multiplier[0];
+	qn = multiplierArray[0];
 	cout << "\t\tashr\t\t";
 	for (i = 0; i < sequenceCounter - 1; i++)
 	{
 		ac[i] = ac[i + 1];
-		multiplier[i] = multiplier[i + 1];
+		multiplierArray[i] = multiplierArray[i + 1];
 	}
-	multiplier[sequenceCounter - 1] = temp;
+	multiplierArray[sequenceCounter - 1] = temp;
 }
 
-void display(int ac[], int multiplier[], int sequenceCounter)
+void display(int ac[], int multiplierArray[], int sequenceCounter)
 {
 	int i;
 
@@ -58,10 +58,22 @@ void display(int ac[], int multiplier[], int sequenceCounter)
 		cout << ac[i];
 	cout << " ";
 	for (i = sequenceCounter - 1; i >= 0; i--)
-		cout << multiplier[i];
+		cout << multiplierArray[i];
 
 }
 
+void binaryToDecimal(int ac[], int multiplierArray[], int sequenceCounter)
+{
+	int i;
+	int result[16];
+
+	for (i = sequenceCounter - 1; i >= 0; i--)
+		 result[i] = ac[i];
+
+	for (i = sequenceCounter - 1; i >= 0; i--)
+		cout << multiplierArray[i];
+
+}
 
 void decimalToBinary(int n, int binaryArray[]) {
 	n = abs(n);
@@ -99,34 +111,13 @@ void binaryToNegative(int binaryArray[]) {
 			break;
 		}
 	}
+	// If No break : all are 1  as in 111  or  11111; 
+	// in such case, add extra 1 at beginning 
+	//if (i == -1) {
+	//	binaryArray[0] = 1;
+	//}
 }
 
-void binaryToNegative2(int binaryArray[]) {
-	int n = (sizeof(binaryArray) / sizeof(*binaryArray));
-
-	// Traverse the string to get first '1' from 
-	// the last of string 
-	int i;
-	for (i = n - 1; i >= 0; i--)
-		if (binaryArray[i] == 1)
-			break;
-
-	//// If there exists no '1' concatenate 1 at the 
-	//// starting of string 
-	//if (i == -1)
-	//	return 1 + binaryArray;
-
-	// Continue traversal after the position of 
-	// first '1' 
-	for (int k = i - 1; k >= 0; k--)
-	{
-		//Just flip the values 
-		if (binaryArray[k] == 1)
-			binaryArray[k] = 0;
-		else
-			binaryArray[k] = 1;
-	}
-}
 int main()
 {
 	//Max input is 127 to -128
@@ -139,13 +130,13 @@ int main()
 	while (!done) {
 		cout << "Please enter the decimal multiplicand: ";
 		cin >> tempMultiplicand;
-		if (tempMultiplicand > 127 || tempMultiplicand < -128) {
+		if (tempMultiplicand > 127 || tempMultiplicand < -127) {
 			cout << "Invalid input" << endl;
 		}
 		else {
 			cout << "Please enter the decimal multiplier: ";
 			cin >> tempMuliplier;
-			if (tempMuliplier > 127 || tempMuliplier < -128) {
+			if (tempMuliplier > 127 || tempMuliplier < -127) {
 				cout << "Invalid input" << endl;
 			}
 			else {
@@ -160,6 +151,7 @@ int main()
 	int i;
 	int qn;
 	int temp;
+	int resultDecimal = tempMultiplicand * tempMuliplier;
 	//cout << "--Enter the multiplicand and multipier in signed 2's complement form if negative--" << endl;
 
 	//cout << "\n Number of multiplicand bit=";
@@ -212,22 +204,23 @@ int main()
 	qn = 0;
 	temp = 0;
 
-	cout << "qn\tq[n+1]\t\tStep\t\tAC\tPlier\t\tsc\n";
+	cout << "\t\t\tStep\t\tProduct\t\t\tIteration\n";
 	cout << "\t\t\tinitial\t\t";
 	display(ac, multiplierArray, multiplierBits);
-	cout << "\t\t" << sc << "\n";
+	cout << "\t" << sc << "\n";
 
 
 	//Main Loop
 	while (sc != 0)
 	{
-		cout << multiplierArray[0] << "\t" << qn;
+		//cout << multiplierArray[0] << "\t" << qn;
+		cout << "\t";
 		if ((qn + multiplierArray[0]) == 1)
 		{
 			if (temp == 0)
 			{
 				add(ac, mt, multiplierBits);
-				cout << "\t\tsubtracting Cand\t";
+				cout << "\t\tsubtracting\t";
 				for (i = multiplierBits - 1; i >= 0; i--)
 					cout << ac[i];
 				temp = 1;
@@ -235,7 +228,7 @@ int main()
 			else if (temp == 1)
 			{
 				add(ac, multiplicandArray, multiplierBits);
-				cout << "\t\tadding Cand\t";
+				cout << "\t\tadding        \t";
 				for (i = multiplierBits - 1; i >= 0; i--)
 					cout << ac[i];
 				temp = 0;
@@ -250,8 +243,9 @@ int main()
 		cout << "\t";
 
 		sc--;
-		cout << "\t" << sc << "\n";
+		cout << sc << "\n";
 	}
-	cout << "Result=";
+	cout << "Result= ";
 	display(ac, multiplierArray, multiplierBits);
+	cout << "\nDecimal= " << resultDecimal;
 }
