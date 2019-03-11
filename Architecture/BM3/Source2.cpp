@@ -5,6 +5,7 @@
 using namespace std;
 
 void add(int a[], int x[], int sequenceCounter);
+//Finds the compliment
 void complement(int a[], int n)
 {
 	int i;
@@ -17,7 +18,7 @@ void complement(int a[], int n)
 	}
 	add(a, x, n);
 }
-
+//Adds
 void add(int ac[], int x[], int sequenceCounter)
 {
 	int i, c = 0;
@@ -34,7 +35,7 @@ void add(int ac[], int x[], int sequenceCounter)
 	}
 
 }
-
+//Arithmatic shift right
 void ashr(int ac[], int multiplierArray[], int &qn, int sequenceCounter)
 {
 	int temp, i;
@@ -49,7 +50,7 @@ void ashr(int ac[], int multiplierArray[], int &qn, int sequenceCounter)
 	}
 	multiplierArray[sequenceCounter - 1] = temp;
 }
-
+//Display the currnet version
 void display(int ac[], int multiplierArray[], int sequenceCounter)
 {
 	int i;
@@ -61,7 +62,7 @@ void display(int ac[], int multiplierArray[], int sequenceCounter)
 		cout << multiplierArray[i];
 
 }
-
+//Convert from Binary to Decimal
 void binaryToDecimal(int ac[], int multiplierArray[], int sequenceCounter)
 {
 	int i;
@@ -82,7 +83,7 @@ void decimalToBinary(int n, int binaryArray[]) {
 		n = n / 2;
 	}
 }
-
+//Convert Binary Number to Negative version of Binary Number
 void binaryToNegative(int binaryArray[]) {
 	int i;
 	//Flip the 1s and 0s
@@ -203,6 +204,7 @@ int main()
 
 	qn = 0;
 	temp = 0;
+
 
 	cout << "\t\t\tStep\t\tProduct\t\t\tIteration\n";
 	cout << "\t\t\tinitial\t\t";
