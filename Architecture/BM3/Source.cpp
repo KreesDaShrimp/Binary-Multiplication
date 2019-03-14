@@ -50,7 +50,7 @@ void ashr(int ac[], int multiplierArray[], int &qn, int sequenceCounter)
 	}
 	multiplierArray[sequenceCounter - 1] = temp;
 }
-//Display the currnet version
+//Display the currnet binary numbers
 void display(int ac[], int multiplierArray[], int sequenceCounter)
 {
 	int i;
@@ -75,7 +75,7 @@ void binaryToDecimal(int ac[], int multiplierArray[], int sequenceCounter)
 		cout << multiplierArray[i];
 
 }
-
+//Converts from decimal to Binary
 void decimalToBinary(int n, int binaryArray[]) {
 	n = abs(n);
 	for(int i = 0; i < 8; i++){
@@ -121,22 +121,21 @@ void binaryToNegative(int binaryArray[]) {
 
 int main()
 {
-	//Max input is 127 to -128
 
-
-	//Convert to Binary
+	//Get the decimal numbers
 	int tempMultiplicand;
 	int tempMuliplier;
 	bool done = false;
 	while (!done) {
-		cout << "Please enter the decimal multiplicand: ";
-		cin >> tempMultiplicand;
+		//Max input is 127 to -127
+		cout << "Please enter the decimal multiplicand (-127 to 127): ";
+		cin >> tempMultiplicand; //Store the number
 		if (tempMultiplicand > 127 || tempMultiplicand < -127) {
 			cout << "Invalid input" << endl;
 		}
 		else {
 			cout << "Please enter the decimal multiplier: ";
-			cin >> tempMuliplier;
+			cin >> tempMuliplier; //Store the number
 			if (tempMuliplier > 127 || tempMuliplier < -127) {
 				cout << "Invalid input" << endl;
 			}
@@ -154,16 +153,8 @@ int main()
 	int temp;
 	int resultDecimal = tempMultiplicand * tempMuliplier;
 	int booths;
-	//cout << "--Enter the multiplicand and multipier in signed 2's complement form if negative--" << endl;
 
-	//cout << "\n Number of multiplicand bit=";
-	//cin >> multiplicandBits;
-	//cout << "\nmultiplicand=";
-
-	//for (i = multiplicandBits - 1; i >= 0; i--)
-	//	cin >> multiplicand[i]; //multiplicand
-
-
+	//Convert from deciamal to binary for multiplicand
 	decimalToBinary(tempMultiplicand, multiplicandArray);
 	if (tempMultiplicand < 0) {
 		binaryToNegative(multiplicandArray);
@@ -179,21 +170,18 @@ int main()
 	for (i = multiplicandBits - 1; i >= 0; i--)
 		mt[i] = multiplicandArray[i]; // copy multiplicand to temp array mt[]
 
+	//Find the compliment
 	complement(mt, multiplicandBits);
-
-	//cout << "\nNo. of multiplier bit=";
-	//cin >> multiplierBits;
 
 	sc = 0; //sequence counter
 
-	//cout << "Multiplier=";
-	//for (i = multiplierBits - 1; i >= 0; i--)
-	//	cin >> multiplier[i]; //multiplier
-
+	//Convert the decimal number to binary for multiplier
 	decimalToBinary(tempMuliplier, multiplierArray);
 	if (tempMuliplier < 0) {
 		binaryToNegative(multiplierArray);
 	}
+
+
 	//Print multiplier
 	cout << "Multiplier: ";
 	for (int i = 7; i >= 0; i--) {
@@ -201,14 +189,13 @@ int main()
 	}
 	cout << endl;
 
-	//BEGIN BOOTHS ALGORITHM
+	/****BEGIN BOOTHS ALGORITHM****/
 
 	qn = 0;
 	temp = 0;
-
 	booths = 0;
 
-
+	//Print the headers
 	cout << "\tIteration\tStep\t\tMultiplicand\t\tProduct\n";
 	cout << "\t" << sc;
 	cout << "\t\tinitial\t\t";
@@ -220,16 +207,15 @@ int main()
 	cout << " " << booths << "\n";
 
 
-	//Main Loop
+	//Main Booth Loop
 	while (sc != multiplierBits)
 	{
 		cout << "\t";
 		cout << sc + 1;
 		if ((qn + multiplierArray[0]) == 1)
 		{
-			if (temp == 0)
+			if (temp == 0) // Subtracting function
 			{
-	// Subtracting function
 				add(ac, mt, multiplierBits);
 				cout << "\t\tsubtracting\t";
 				for (int i = 7; i >= 0; i--) {
@@ -241,9 +227,8 @@ int main()
 
 				temp = 1;
 			}
-			else if (temp == 1)
+			else if (temp == 1) // Adding function
 			{
-	// Adding function
 				add(ac, multiplicandArray, multiplierBits);
 				cout << "\t\tadding        \t";
 				for (int i = 7; i >= 0; i--) {
@@ -273,9 +258,9 @@ int main()
 		cout << "\t\t";
 		display(ac, multiplierArray, multiplierBits);
 		cout << " " << booths << "\n";
-
 		sc++;
 	}
+	//Print the final result
 	cout << "Result = ";
 	display(ac, multiplierArray, multiplierBits);
 	cout << "\nDecimal = " << resultDecimal;
