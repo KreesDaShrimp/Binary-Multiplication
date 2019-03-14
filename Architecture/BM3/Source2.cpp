@@ -153,6 +153,7 @@ int main()
 	int qn;
 	int temp;
 	int resultDecimal = tempMultiplicand * tempMuliplier;
+	int booths;
 	//cout << "--Enter the multiplicand and multipier in signed 2's complement form if negative--" << endl;
 
 	//cout << "\n Number of multiplicand bit=";
@@ -183,7 +184,7 @@ int main()
 	//cout << "\nNo. of multiplier bit=";
 	//cin >> multiplierBits;
 
-	sc = multiplierBits; //sequence counter
+	sc = 0; //sequence counter
 
 	//cout << "Multiplier=";
 	//for (i = multiplierBits - 1; i >= 0; i--)
@@ -205,49 +206,83 @@ int main()
 	qn = 0;
 	temp = 0;
 
+	booths = 0;
 
-	cout << "\t\t\tStep\t\tProduct\t\t\tIteration\n";
-	cout << "\t\t\tinitial\t\t";
+
+	cout << "\tIteration\tStep\t\tMultiplicand\t\tProduct\n";
+	cout << "\t" << sc;
+	cout << "\t\tinitial\t\t";
+	for (int i = 7; i >= 0; i--) {
+		cout << multiplicandArray[i];
+	}
+	cout << "\t\t";
 	display(ac, multiplierArray, multiplierBits);
-	cout << "\t" << sc << "\n";
+	cout << " " << booths << "\n";
 
 
 	//Main Loop
-	while (sc != 0)
+	while (sc != multiplierBits)
 	{
 		//cout << multiplierArray[0] << "\t" << qn;
 		cout << "\t";
+		cout << sc + 1;
 		if ((qn + multiplierArray[0]) == 1)
 		{
+			//booths = 1;
 			if (temp == 0)
 			{
 				add(ac, mt, multiplierBits);
 				cout << "\t\tsubtracting\t";
-				for (i = multiplierBits - 1; i >= 0; i--)
-					cout << ac[i];
+				for (int i = 7; i >= 0; i--) {
+					cout << multiplicandArray[i];
+				}
+				cout << "\t\t";
+				//for (i = multiplierBits - 1; i >= 0; i--)
+				//	cout << ac[i];
+				display(ac, multiplierArray, multiplierBits);
+				cout << " " << booths;
+
 				temp = 1;
 			}
 			else if (temp == 1)
 			{
 				add(ac, multiplicandArray, multiplierBits);
 				cout << "\t\tadding        \t";
-				for (i = multiplierBits - 1; i >= 0; i--)
-					cout << ac[i];
+				for (int i = 7; i >= 0; i--) {
+					cout << multiplicandArray[i];
+				}
+				cout << "\t\t";
+				//for (i = multiplierBits - 1; i >= 0; i--)
+				//	cout << ac[i];
+				display(ac, multiplierArray, multiplierBits);
+				cout << " " << booths;
 				temp = 0;
 			}
 			cout << "\n\t";
+			if (multiplierArray[0] == 1) {
+				booths = 1;
+			}
+			else {
+				booths = 0;
+			}
 			ashr(ac, multiplierArray, qn, multiplierBits);
 		}
 		else if (qn - multiplierArray[0] == 0)
+		{
+			//booths = 0;
 			ashr(ac, multiplierArray, qn, multiplierBits);
-
+		}
+		for (int i = 7; i >= 0; i--) {
+			cout << multiplicandArray[i];
+		}
+		cout << "\t\t";
 		display(ac, multiplierArray, multiplierBits);
-		cout << "\t";
+		cout << " " << booths << "\n";
 
-		sc--;
-		cout << sc << "\n";
+		sc++;
+		//cout << sc << "\n";
 	}
-	cout << "Result= ";
+	cout << "Result = ";
 	display(ac, multiplierArray, multiplierBits);
-	cout << "\nDecimal= " << resultDecimal;
+	cout << "\nDecimal = " << resultDecimal;
 }
