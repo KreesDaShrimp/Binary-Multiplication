@@ -69,7 +69,7 @@ void binaryToDecimal(int ac[], int multiplierArray[], int sequenceCounter)
 	int result[16];
 
 	for (i = sequenceCounter - 1; i >= 0; i--)
-		 result[i] = ac[i];
+		result[i] = ac[i];
 
 	for (i = sequenceCounter - 1; i >= 0; i--)
 		cout << multiplierArray[i];
@@ -78,7 +78,7 @@ void binaryToDecimal(int ac[], int multiplierArray[], int sequenceCounter)
 //Converts from decimal to Binary
 void decimalToBinary(int n, int binaryArray[]) {
 	n = abs(n);
-	for(int i = 0; i < 8; i++){
+	for (int i = 0; i < 8; i++) {
 		binaryArray[i] = n % 2;
 		n = n / 2;
 	}
@@ -196,7 +196,9 @@ int main()
 	booths = 0;
 
 	//Print the headers
-	cout << "\tIteration\tStep\t\tMultiplicand\t\tProduct\n";
+	cout << "\n\tIteration\tStep\t\tMultiplicand\t\tProduct\n";
+	cout << "   ----------------------------------------------------------------------------------------" << endl;
+
 	cout << "\t" << sc;
 	cout << "\t\tinitial\t\t";
 	for (int i = 7; i >= 0; i--) {
@@ -205,7 +207,6 @@ int main()
 	cout << "\t\t";
 	display(ac, multiplierArray, multiplierBits);
 	cout << " " << booths << "\n";
-
 
 	//Main Booth Loop
 	while (sc != multiplierBits)
@@ -261,7 +262,7 @@ int main()
 		sc++;
 	}
 	//Print the final result
-	cout << "Result = ";
+	cout << "\nResult = ";
 	display(ac, multiplierArray, multiplierBits);
-	cout << "\nDecimal = " << resultDecimal;
+	cout << "\nDecimal = " << resultDecimal << endl;
 }
