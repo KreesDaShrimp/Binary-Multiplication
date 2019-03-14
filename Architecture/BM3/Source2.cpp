@@ -223,22 +223,19 @@ int main()
 	//Main Loop
 	while (sc != multiplierBits)
 	{
-		//cout << multiplierArray[0] << "\t" << qn;
 		cout << "\t";
 		cout << sc + 1;
 		if ((qn + multiplierArray[0]) == 1)
 		{
-			//booths = 1;
 			if (temp == 0)
 			{
+	// Subtracting function
 				add(ac, mt, multiplierBits);
 				cout << "\t\tsubtracting\t";
 				for (int i = 7; i >= 0; i--) {
 					cout << multiplicandArray[i];
 				}
 				cout << "\t\t";
-				//for (i = multiplierBits - 1; i >= 0; i--)
-				//	cout << ac[i];
 				display(ac, multiplierArray, multiplierBits);
 				cout << " " << booths;
 
@@ -246,14 +243,13 @@ int main()
 			}
 			else if (temp == 1)
 			{
+	// Adding function
 				add(ac, multiplicandArray, multiplierBits);
 				cout << "\t\tadding        \t";
 				for (int i = 7; i >= 0; i--) {
 					cout << multiplicandArray[i];
 				}
 				cout << "\t\t";
-				//for (i = multiplierBits - 1; i >= 0; i--)
-				//	cout << ac[i];
 				display(ac, multiplierArray, multiplierBits);
 				cout << " " << booths;
 				temp = 0;
@@ -269,7 +265,6 @@ int main()
 		}
 		else if (qn - multiplierArray[0] == 0)
 		{
-			//booths = 0;
 			ashr(ac, multiplierArray, qn, multiplierBits);
 		}
 		for (int i = 7; i >= 0; i--) {
@@ -280,7 +275,6 @@ int main()
 		cout << " " << booths << "\n";
 
 		sc++;
-		//cout << sc << "\n";
 	}
 	cout << "Result = ";
 	display(ac, multiplierArray, multiplierBits);
